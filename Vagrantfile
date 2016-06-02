@@ -17,7 +17,14 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     yum -y upgrade
     yum -y install epel-release
-    yum -y install ansible
+    yum -y install ansible dnsmasq
+
+    cp /vagrant/files/hosts /etc/hosts
+
+    systemctl enable dnsmasq
+    systemctl restart dnsmasq
+
+    systemctl disable firewalld
   SHELL
 
 end
